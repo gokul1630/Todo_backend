@@ -36,9 +36,13 @@ const update_todo = async (req, res) => {
   });
 };
 const delete_todo = (req, res) => {
-  const { todoId } = req.body;
+  const { todoId, userId } = req.body;
   Todo.findByIdAndDelete(todoId)
-    .then(() => res.json('Todo Deleted'))
+    .then(() =>
+      User.findById(userId)
+        .populate('todoList')
+        .exec((err, post) => res.json(post.todoList))
+    )
     .catch((err) => res.status(400).json(err.message));
 };
 
