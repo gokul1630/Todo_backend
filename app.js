@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 const app = express();
 const TodoRoute = require('./routes/TodoRoute');
 const UserRoute = require('./routes/UserRoute');
+const cors = require('cors');
 
+app.use(cors());
 app.use(express.json());
 const port = process.env.PORT || 1234;
 const URL = process.env.MONGO_URL || '';
