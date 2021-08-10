@@ -1,7 +1,7 @@
 const User = require('../models/UserModel');
 const Todo = require('../models/TodoModel');
 
-const post_signin_user = async (req, res) => {
+const loginUser = async (req, res) => {
   const { user, password } = req.body;
   let users = await User.findOne({ user, password });
   if (!users) {
@@ -11,12 +11,12 @@ const post_signin_user = async (req, res) => {
   }
 };
 
-const post_new_user = async (req, res) => {
+const signUpUser = async (req, res) => {
   const { user, password } = req.body;
   let data = await User.create({ user, password });
   res.json(data);
 };
-const delete_delete_user = async (req, res) => {
+const deleteUser = async (req, res) => {
   const { userId } = req.body;
   let user = await User.findByIdAndDelete(userId);
   let todo = await Todo.find({ userId });
@@ -29,7 +29,7 @@ const delete_delete_user = async (req, res) => {
 };
 
 module.exports = {
-  post_signin_user,
-  post_new_user,
-  delete_delete_user,
+  loginUser,
+  signUpUser,
+  deleteUser,
 };
