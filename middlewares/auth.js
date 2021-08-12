@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/UserModel');
-
+const { findUserService } = require('../services/UserServices');
 const auth = async (req, res, next) => {
   let token;
   if (
@@ -14,7 +14,7 @@ const auth = async (req, res, next) => {
   }
   try {
     let decoded = jwt.verify(token, process.env.JWT_SECRET);
-    let users = await User.findById(decoded.id);
+    let users = await findUserService(decoded.id);
     if (!users) {
       return res.status(403).send({ message: 'No users Found' });
     }
