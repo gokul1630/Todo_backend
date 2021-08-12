@@ -1,5 +1,5 @@
-const User = require('../models/UserModel');
-const Todo = require('../models/TodoModel');
+const User = require("../models/UserModel");
+const Todo = require("../models/TodoModel");
 
 exports.findUserService = async function (userId) {
   return await User.findById(userId);
@@ -54,7 +54,7 @@ exports.getAllTodoService = async function (req, res) {
   try {
     await User.findById(userId)
       .lean()
-      .populate('todoList')
+      .populate("todoList")
       .exec((err, post) => {
         if (post) {
           res.json(post.todoList);

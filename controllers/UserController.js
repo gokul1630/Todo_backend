@@ -1,18 +1,18 @@
-const User = require('../models/UserModel');
-const Todo = require('../models/TodoModel');
+const User = require("../models/UserModel");
+const Todo = require("../models/TodoModel");
 const {
   SignUpService,
   SignInService,
   DeleteUser,
-} = require('../services/UserServices');
-const { DeleteTodo } = require('../services/TodoServices');
+} = require("../services/UserServices");
+const { DeleteTodo } = require("../services/TodoServices");
 
 const loginUser = async (req, res, next) => {
   const { user, password } = req.body;
 
   if (!user || !password) {
     res.status(403).send({
-      message: 'Please provide email and password',
+      message: "Please provide email and password",
     });
   }
   try {
@@ -55,9 +55,9 @@ const deleteUser = async (req, res) => {
 
   if (user || todo) {
     todo.forEach((documents) => documents.remove());
-    res.json('user deleted');
+    res.json("user deleted");
   } else {
-    res.status(403).send({ message: 'something went wrong' });
+    res.status(403).send({ message: "something went wrong" });
   }
 };
 

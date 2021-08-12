@@ -1,28 +1,28 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/UserModel');
-const { findUserService } = require('../services/UserServices');
+const jwt = require("jsonwebtoken");
+const User = require("../models/UserModel");
+const { findUserService } = require("../services/UserServices");
 const auth = async (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
+    req.headers.authorization.startsWith("Bearer")
   ) {
-    token = req.headers.authorization.split(' ')[1];
+    token = req.headers.authorization.split(" ")[1];
   }
   if (!token) {
-    return res.status(403).send({ message: 'Auth Token missing' });
+    return res.status(403).send({ message: "Auth Token missing" });
   }
   try {
     let decoded = jwt.verify(token, process.env.JWT_SECRET);
     let users = await findUserService(decoded.id);
     if (!users) {
-      return res.status(403).send({ message: 'No users Found' });
+      return res.status(403).send({ message: "No users Found" });
     }
     req.user = users;
 
     next();
   } catch (err) {
-    return res.status(403).send({ message: 'err' });
+    return res.status(403).send({ message: "err" });
   }
 };
 module.exports = auth;

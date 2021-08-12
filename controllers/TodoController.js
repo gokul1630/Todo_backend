@@ -1,11 +1,11 @@
-const Todo = require('../models/TodoModel');
+const Todo = require("../models/TodoModel");
 const {
   UpdateTodoService,
   completedTodoService,
   getOneTodo,
   DeleteTodo,
-} = require('../services/TodoServices');
-const { AddNewTodo, getAllTodoService } = require('../services/UserServices');
+} = require("../services/TodoServices");
+const { AddNewTodo, getAllTodoService } = require("../services/UserServices");
 
 const getAllTodo = async (req, res) => {
   return await getAllTodoService(req, res);

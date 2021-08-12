@@ -1,4 +1,4 @@
-const Todo = require('../models/TodoModel');
+const Todo = require("../models/TodoModel");
 
 exports.UpdateTodoService = async function (req, res) {
   const { todoId, todo, description } = req.body;
