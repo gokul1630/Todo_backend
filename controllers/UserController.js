@@ -35,9 +35,9 @@ const loginUser = async (req, res, next) => {
 const signUpUser = async (req, res) => {
   const { user, password } = req.body;
   try {
-    let signUpService = await SignUpService(user, password);
-    let token = signUpService.getToken();
-    res.json({ token: token });
+    let signUp = await signUpService(user, password);
+    let token = signUp.getToken();
+    res.json({ token: token, user: signUp });
   } catch (error) {
     res.statusCode(403).send(error.message);
   }
