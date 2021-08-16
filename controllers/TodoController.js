@@ -1,17 +1,17 @@
-const { updateTodoService, deleteTodo } = require('../services/TodoServices');
-const { addNewTodo, getAllTodoService } = require('../services/UserServices');
+const { updateTodoService, deleteTodo } = require('../services/TodoServices')
+const { addNewTodo, getAllTodoService } = require('../services/UserServices')
 
 const getAllTodo = async (req, res) => {
-  const { userId } = req.body;
+  const { userId } = req.body
   try {
-    const todos = await getAllTodoService(userId);
+    const todos = await getAllTodoService(userId)
     if (todos) {
-      res.json(todos.todoList);
+      res.json(todos.todoList)
     }
   } catch (error) {
-    res.status(403).send(error.message);
+    res.status(403).send(error.message)
   }
-};
+}
 
 const postNewTodo = async (req, res) => {
   let {
@@ -22,7 +22,7 @@ const postNewTodo = async (req, res) => {
     testing = false,
     completed = false,
     userId,
-  } = req.body;
+  } = req.body
   const todos = await addNewTodo({
     todo,
     description,
@@ -31,15 +31,15 @@ const postNewTodo = async (req, res) => {
     onGoing,
     testing,
     userId,
-  });
+  })
   try {
     if (todos) {
-      res.json(todos);
+      res.json(todos)
     }
   } catch (error) {
-    res.status(403).send(error.message);
+    res.status(403).send(error.message)
   }
-};
+}
 
 const updateTodo = async (req, res) => {
   const {
@@ -50,40 +50,40 @@ const updateTodo = async (req, res) => {
     onGoing = false,
     testing = false,
     completed = false,
-  } = req.body;
+  } = req.body
 
   try {
-    const completeTodo = await updateTodoService(todoId);
+    const completeTodo = await updateTodoService(todoId)
     if (todo && description) {
-      (completeTodo.todo = todo), (completeTodo.description = description);
+      ;(completeTodo.todo = todo), (completeTodo.description = description)
     }
     if (pending || onGoing || testing || completed) {
-      (completeTodo.pending = pending),
+      ;(completeTodo.pending = pending),
         (completeTodo.onGoing = onGoing),
         (completeTodo.testing = testing),
-        (completeTodo.completed = completed);
+        (completeTodo.completed = completed)
     }
-    completeTodo.save();
-    res.json(completeTodo);
+    completeTodo.save()
+    res.json(completeTodo)
   } catch (error) {
-    console.log(error);
-    res.status(403).send(error.message);
+    console.log(error)
+    res.status(403).send(error.message)
   }
-};
+}
 
 const deleteTodos = async (req, res) => {
-  const { todoId } = req.body;
+  const { todoId } = req.body
   try {
-    const todo = await deleteTodo(todoId);
-    res.json(todo);
+    const todo = await deleteTodo(todoId)
+    res.json(todo)
   } catch (error) {
-    res.status(403).send(error.message);
+    res.status(403).send(error.message)
   }
-};
+}
 
 module.exports = {
   getAllTodo,
   postNewTodo,
   updateTodo,
   deleteTodos,
-};
+}
