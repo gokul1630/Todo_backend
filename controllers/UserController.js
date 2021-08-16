@@ -1,28 +1,21 @@
-const User = require("../models/UserModel");
-const Todo = require("../models/TodoModel");
-const {
-  SignUpService,
-  SignInService,
-  DeleteUser,
-} = require("../services/UserServices");
-const { DeleteTodo } = require("../services/TodoServices");
+const { signUpService, signInService } = require('../services/UserServices');
 
 const loginUser = async (req, res, next) => {
   const { user, password } = req.body;
 
   if (!user || !password) {
     res.status(403).send({
-      message: "Please provide email and password",
+      message: 'Please provide email and password',
     });
   }
   try {
-    const signInService = await SignInService(user);
-    if (signInService) {
-      const match = signInService.checkPassword(password);
+    const signIn = await signInService(user);
+    if (signIn) {
+      const match = signIn.checkPassword(password);
       if (!match) {
         res.status(403).send({ message: "Password doesn't match" });
       }
-      let token = signInService.getToken();
+      let token = signIn.getToken();
       res.status(200).json({ token: token });
     } else {
       res.status(403).send({ message: "Email isn't registred yet" });
@@ -48,22 +41,8 @@ const me = async (req, res) => {
   res.json(data);
 };
 
-const deleteUser = async (req, res) => {
-  const { userId } = req.body;
-  let user = await DeleteUser(userId);
-  let todo = await DeleteTodo(userId);
-
-  if (user || todo) {
-    todo.forEach((documents) => documents.remove());
-    res.json("user deleted");
-  } else {
-    res.status(403).send({ message: "something went wrong" });
-  }
-};
-
 module.exports = {
   loginUser,
   me,
   signUpUser,
-  deleteUser,
 };
