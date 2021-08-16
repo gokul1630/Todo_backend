@@ -1,14 +1,13 @@
-const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
-const UserSchema = Schema({
+const UserSchema = mongoose.Schema({
   user: { type: String, required: true },
   password: { type: String, required: true },
   todoList: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Todo",
+      ref: 'Todo',
     },
   ],
 });
@@ -22,4 +21,4 @@ UserSchema.methods.checkPassword = function (password) {
   return password === this.password;
 };
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', UserSchema);
